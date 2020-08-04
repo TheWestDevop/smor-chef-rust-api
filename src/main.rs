@@ -36,6 +36,7 @@ fn main() {
         routes::delete_user_post,
         ])
     .mount("/api/v1/admin", routes![
+        routes::index,
         routes::posts,  
         routes::delete_booking,
         routes::update_booking_status,
