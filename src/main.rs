@@ -28,6 +28,10 @@ fn main() {
         routes::update_booking,
         routes::user_booking,
         routes::chef_booking,
+        routes::chef_bank_detail,
+        routes::create_bank_detail,
+        routes::update_bank_detail,
+        routes::delete_bank_detail,
         routes::post,
         routes::update_user_post,
         routes::user_like_post,
@@ -41,6 +45,7 @@ fn main() {
         routes::delete_booking,
         routes::update_booking_status,
         routes::bookings,
+        routes::bank_details
         ])
     .register(
         catchers![

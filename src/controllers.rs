@@ -7,6 +7,64 @@ use rocket_contrib::json::{JsonValue};
 //  use crate::auth::*;
 use crate::schema;
 
+pub fn all_chef_bank_details(con:PgConnection) ->  JsonValue {
+    use schema::smor_chef_bank_detail::dsl::*;
+    let results = smor_chef_bank_detail.load::<ChefBankDetail>(&con)
+    .expect("Error loading all chef bank detail");
+    // print!("query result  {:?}",results);
+    return json!({
+        "status": true,
+        "data":results
+    })
+}
+pub fn create_chef_bank_detail(con:PgConnection,detail:New_ChefBankDetail)-> JsonValue {
+    use schema::smor_chef_bank_detail;
+    let results = diesel::insert_into(smor_chef_bank_detail::table)
+                                                .values(detail)
+                                                .get_result::<ChefBankDetail>(&con)
+                                                .expect("Error creating new chef bank detail");
+    return json!({
+                "status": true,
+                "data":results
+            })  
+}
+pub fn update_chef_bank_detail(con:PgConnection,detail:Update_ChefBankDetail) -> JsonValue {
+    use schema::smor_chef_bank_detail::dsl::*;
+
+    let results = diesel::update(smor_chef_bank_detail.filter(user_id.eq(detail.user_id)))
+                                                .set((
+                                                    bank_name.eq(&detail.bank_name),
+                                                    account_number.eq(&detail.account_number),
+                                                    update_at.eq(&detail.update_at),
+                                                ))
+                                                .get_result::<ChefBankDetail>(&con)
+                                                .expect("Error updating chef bank detail");
+    return json!({
+                "status": true,
+                "data":results
+            })
+}
+pub fn delete_chef_bank_detail(con:PgConnection,uid:String) -> JsonValue {
+    use schema::smor_chef_bank_detail::dsl::*;
+    diesel::delete(smor_chef_bank_detail.filter(user_id.eq(uid)))
+    .execute(&con)
+        .expect("Error deleting chef bank detail");
+    return json!({
+            "status": true,
+            "data":"Chef bank detail deleted successfully"
+        })
+}
+pub fn get_chef_bank_detail(con:PgConnection,uid:String)->JsonValue{
+    use schema::smor_chef_bank_detail::dsl::*;
+    let results = smor_chef_bank_detail.filter(user_id.eq(&uid))
+    .load::<ChefBankDetail>(&con)
+    .expect("Error loading chef bank detail");
+    // print!("query result  {:?}",results);
+    return json!({
+        "status": true,
+        "data":results
+    })
+}
 pub fn all_posts(con:PgConnection) ->  JsonValue {
     use schema::smor_how_to::dsl::*;
     let results = smor_how_to.load::<Post>(&con)

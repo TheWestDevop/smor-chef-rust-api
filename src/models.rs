@@ -46,6 +46,15 @@ pub struct Booking{
     pub created_at: String,
     pub update_at: String,
 }
+#[derive(Queryable,Serialize, Deserialize,Debug)]
+pub struct ChefBankDetail{
+    pub id: i32,
+    pub user_id: String,
+    pub bank_name: String,
+    pub account_number: String,
+    pub created_at: String,
+    pub update_at: String,
+}
 
 #[derive(Insertable,Debug)]
 #[table_name="smor_how_to"]
@@ -116,7 +125,29 @@ impl New_Booking {
         }
     }
 }
-
+#[derive(Insertable,Debug)]
+#[table_name="smor_chef_bank_detail"]
+pub struct New_ChefBankDetail{
+    pub user_id: String,
+    pub bank_name: String,
+    pub account_number: String,
+    pub created_at: String,
+    pub update_at: String,
+}
+impl New_ChefBankDetail {
+    pub fn new(user_id: String,bank_name: String,account_number: String,) -> New_ChefBankDetail {
+        let created_at = Local::now().to_string();
+        let update_at = Local::now().to_string();
+        
+        New_ChefBankDetail{
+            user_id,
+            bank_name,
+            account_number,
+            created_at,
+            update_at
+         }
+    }
+}
 #[derive(Identifiable,Debug)]
 #[table_name="smor_how_to"]
 pub struct Update_Post{
@@ -173,6 +204,27 @@ impl Update_Booking {
     }
 }
 
+#[derive(Identifiable,Debug)]
+#[table_name="smor_chef_bank_detail"]
+pub struct Update_ChefBankDetail{
+    pub id:i32,
+    pub user_id: String,
+    pub bank_name: String,
+    pub account_number: String,
+    pub update_at: String,
+}
+impl Update_ChefBankDetail {
+    pub fn new(id:i32,user_id:String,bank_name: String,account_number: String) -> Update_ChefBankDetail {
+         let update_at = Local::now().to_string();
+        Update_ChefBankDetail {
+            id,
+            user_id,
+            bank_name,
+            account_number,
+            update_at
+        } 
+    }
+}
 
 #[derive(FromForm,Debug)]
  pub struct NewPost{
@@ -193,6 +245,12 @@ impl Update_Booking {
     pub booking_location: String,
 }
 #[derive(FromForm,Debug)]
+ pub struct NewChefBankDetail{
+    pub user_id: String,
+    pub bank_name: String,
+    pub account_number: String,
+}
+#[derive(FromForm,Debug)]
  pub struct UpdatePost{
     pub id:i32,
     pub post_id: String,
@@ -211,4 +269,11 @@ impl Update_Booking {
     pub dish_cost: String,
     pub dish_time_frame: String,
     pub more_detail: String,
+}
+#[derive(FromForm,Debug)]
+ pub struct UpdateChefBankDetail{
+    pub id:i32,
+    pub user_id: String,
+    pub bank_name: String,
+    pub account_number: String,
 }

@@ -1,4 +1,15 @@
 table! {
+    smor_chef_bank_detail (id) {
+        id -> Int4,
+        user_id -> Varchar,
+        bank_name -> Varchar,
+        account_number -> Varchar,
+        created_at -> Varchar,
+        update_at -> Varchar,
+    }
+}
+
+table! {
     smor_chefs_bookings (id) {
         id -> Int4,
         booking_id -> Varchar,
@@ -32,6 +43,7 @@ table! {
 }
 
 allow_tables_to_appear_in_same_query!(
+    smor_chef_bank_detail,
     smor_chefs_bookings,
     smor_how_to,
 );

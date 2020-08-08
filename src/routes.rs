@@ -77,6 +77,47 @@ pub fn delete_booking(booking_id:String,_auth:NormalAdminApiKey) -> JsonValue {
    return delete_chef_booking(connect,booking_id);
 }
 
+#[get("/all/chefs/bank/detail",)]
+pub fn bank_details(_auth:NormalAdminApiKey) -> JsonValue { 
+    let connect = establish_connection();
+   return all_chef_bank_details(connect);
+    
+}
+
+#[get("/get/user/<uid>/bank/detail")]
+pub fn chef_bank_detail(uid:String,_auth:UserApiKey) -> JsonValue {
+    let connect = establish_connection();
+   return get_chef_bank_detail(connect,uid);
+}
+
+#[post("/create/chef/bank/detail",data="<data>")]
+pub fn create_bank_detail(data:Form<NewChefBankDetail>,_auth:UserApiKey) -> JsonValue {
+    let connect = establish_connection();
+    let new_detail = New_ChefBankDetail::new(
+        data.user_id.to_string(),
+        data.bank_name.to_string(),
+        data.account_number.to_string()
+    );
+   return create_chef_bank_detail(connect,new_detail);
+}
+
+#[put("/update/chef/bank/detail",data="<data>")]
+pub fn update_bank_detail(data:Form<UpdateChefBankDetail>,_auth:UserApiKey) -> JsonValue {
+    let connect = establish_connection();
+    let detail = Update_ChefBankDetail::new(
+        data.id,
+        data.user_id.to_string(),
+        data.bank_name.to_string(),
+        data.account_number.to_string(),
+    );
+   return update_chef_bank_detail(connect,detail);
+}
+
+#[delete("/delete/bank/detail/<user_id>")]
+pub fn delete_bank_detail(user_id:String,_auth:UserApiKey) -> JsonValue {
+    let connect = establish_connection();
+   return delete_chef_bank_detail(connect,user_id);
+}
 #[get("/all/posts",)]
 pub fn posts(_auth:NormalAdminApiKey) -> JsonValue { 
     let connect = establish_connection();
