@@ -9,7 +9,7 @@ use crate::schema;
 
 pub fn all_chef_bank_details(con:PgConnection) ->  JsonValue {
     use schema::smor_chef_bank_detail::dsl::*;
-    let results = smor_chef_bank_detail.load::<ChefBankDetail>(&con)
+    let results = smor_chef_bank_detail.order(id.desc()).load::<ChefBankDetail>(&con)
     .expect("Error loading all chef bank detail");
     // print!("query result  {:?}",results);
     return json!({
@@ -67,7 +67,7 @@ pub fn get_chef_bank_detail(con:PgConnection,uid:String)->JsonValue{
 }
 pub fn all_posts(con:PgConnection) ->  JsonValue {
     use schema::smor_how_to::dsl::*;
-    let results = smor_how_to.load::<Post>(&con)
+    let results = smor_how_to.order(id.desc()).load::<Post>(&con)
     .expect("Error loading all posts");
     // print!("query result  {:?}",results);
     return json!({
@@ -116,7 +116,7 @@ pub fn delete_post(con:PgConnection,pid:String) -> JsonValue {
 }
 pub fn get_user_post(con:PgConnection,uid:String)->JsonValue{
     use schema::smor_how_to::dsl::*;
-    let results = smor_how_to.filter(user_id.eq(&uid))
+    let results = smor_how_to.filter(user_id.eq(&uid)).order(id.desc())
     .load::<Post>(&con)
     .expect("Error loading all user how to");
     // print!("query result  {:?}",results);
@@ -161,10 +161,9 @@ pub fn post_viewed(con:PgConnection,pid:String) -> JsonValue{
                 "data":"Viewed"
             })
 }
-
 pub fn all_bookings(con:PgConnection) ->  JsonValue {
     use schema::smor_chefs_bookings::dsl::*;
-    let results = smor_chefs_bookings.load::<Booking>(&con)
+    let results = smor_chefs_bookings.order(id.desc()).load::<Booking>(&con)
     .expect("Error loading all bookings");
     // print!("query result  {:?}",results);
     return json!({
@@ -224,10 +223,9 @@ pub fn delete_chef_booking(con:PgConnection,booked_id:String) -> JsonValue {
             "data":"Chef booking deleted successfully"
         })
 }
-
 pub fn get_user_booking(con:PgConnection,uid:String)->JsonValue{
     use schema::smor_chefs_bookings::dsl::*;
-    let results = smor_chefs_bookings.filter(user_id.eq(&uid))
+    let results = smor_chefs_bookings.filter(user_id.eq(&uid)).order(id.desc())
     .load::<Booking>(&con)
     .expect("Error loading all user bookings");
     // print!("query result  {:?}",results);
@@ -236,10 +234,9 @@ pub fn get_user_booking(con:PgConnection,uid:String)->JsonValue{
         "data":results
     })
 }
-
 pub fn get_chef_booking(con:PgConnection,cid:String)->JsonValue{
     use schema::smor_chefs_bookings::dsl::*;
-    let results = smor_chefs_bookings.filter(chef_id.eq(&cid))
+    let results = smor_chefs_bookings.filter(chef_id.eq(&cid)).order(id.desc())
     .load::<Booking>(&con)
     .expect("Error loading all chef bookings");
     // print!("query result  {:?}",results);
