@@ -46,7 +46,8 @@ fn main() {
         routes::delete_booking,
         routes::update_booking_status,
         routes::bookings,
-        routes::bank_details
+        routes::bank_details,
+        routes::delete_user_post,
         ])
     .register(
         catchers![
