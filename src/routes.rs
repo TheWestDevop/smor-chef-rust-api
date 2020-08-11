@@ -132,13 +132,13 @@ pub fn user_posts(uid:String,_auth:UserApiKey) -> JsonValue {
    return get_user_post(connect,uid);
 }
 
-#[put("/like/post/<pid>")]
+#[get("/like/post/<pid>")]
 pub fn user_like_post(pid:String,_auth:UserApiKey) -> JsonValue {
     let connect = establish_connection();
    return like_post(connect,pid);
 }
 
-#[patch("/post/<pid>/viewed")]
+#[get("/post/<pid>/viewed")]
 pub fn user_viewed_post(pid:String,_auth:UserApiKey) -> JsonValue {
     let connect = establish_connection();
    return post_viewed(connect,pid);
