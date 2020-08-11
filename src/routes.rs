@@ -118,8 +118,9 @@ pub fn delete_bank_detail(user_id:String,_auth:UserApiKey) -> JsonValue {
     let connect = establish_connection();
    return delete_chef_bank_detail(connect,user_id);
 }
+
 #[get("/all/posts",)]
-pub fn posts(_auth:NormalAdminApiKey) -> JsonValue { 
+pub fn posts(_auth:UserApiKey) -> JsonValue { 
     let connect = establish_connection();
    return all_posts(connect);
     
