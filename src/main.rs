@@ -33,6 +33,7 @@ fn main() {
         routes::update_bank_detail,
         routes::delete_bank_detail,
         routes::post,
+        routes::posts,
         routes::update_user_post,
         routes::user_like_post,
         routes::user_posts,
